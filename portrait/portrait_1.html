@@ -1,0 +1,36 @@
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+
+<style>
+@font-face {
+    font-family: hackerchaos;
+    src: url("hackerchaos.otf") format("opentype");
+}
+
+p {
+   background: url('ahanna334.png');
+   background-clip: text;
+   background-repeat: no-repeat;
+   background-size: 50%;
+   background-position: center;
+   height: 100%;
+   margin-bottom:10px;
+   color: rgba(255,255,255, 0.3);
+   font-family: 'hackerchaos'
+}
+</style>
+
+<p repeat="5000"> Hack The Planet!</p>
+
+<script>
+$(document).ready(function() {
+  $('[repeat]').each(function() {
+     var toRepeat = $(this).text();
+     var times = parseInt($(this).attr('repeat'));
+     var repeated = Array(times+1).join(toRepeat);
+     $(this).text(repeated).removeAttr('repeat');
+   });
+ });
+</script>

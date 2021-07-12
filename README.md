@@ -10,4 +10,13 @@ https://portrait1.netlify.app/
 
 https://portrait2.netlify.app/
 
+<img src="https://github.com/ahanna334/HTML_CSS_JavaScript/blob/main/exif_data/1.png" width="800">
+
+<img src="https://github.com/ahanna334/HTML_CSS_JavaScript/blob/main/exif_data/2.png" width="800">
+
+<img src="https://github.com/ahanna334/HTML_CSS_JavaScript/blob/main/exif_data/3.png" width="800">
+
+
+https://happy-goldwasser-81e49f.netlify.app/
+
 

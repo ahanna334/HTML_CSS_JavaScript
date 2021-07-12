@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="text/javascript" src="MooTools-Core-1.6.0.js"></script>
+<input id="filebtn" type="button" class="button-one" value="Open Photo">
+<div id="stdout">no exif</div>
+<br>
+<img src="https://www.google.com/images/branding/product/2x/maps_96in128dp.png" alt="googleMapsLogo" style="width:150px;height:150px;">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.8.2/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.0.6/require.min.js"></script>
+<script>
+require(["jpeg.js"],function(jpegmeta){});
+$("#filebtn").click(function(){
+  var files;
+  var exif;
+  var fbtn = $('<input type="file" multiple="multiple" accept="image/jpeg" />');
+  fbtn.unbind().on("change",function(){
+    function check(){
+      if(_.reject(results,_.identity).length)
+        return;
+      console.log("Display EXIF data:",results)
+      var string = JSON.stringify(results)
+
+
+      var long = string.substring(
+      string.lastIndexOf(" Longitude") + 1, 
+      string.lastIndexOf("}")
+      );
+
+      var split_long = (long.split('}')[0])
+      var replace_long = split_long.replace("\",\"value\"", " ")
+      var colon_long = replace_long.replace(":", ": ")
+
+
+
+      var lat = string.substring(
+      string.lastIndexOf(" Latitude") + 1, 
+      string.lastIndexOf("}")
+      );
+
+      var split_lat = (lat.split('}')[0])
+      var replace_lat = split_lat.replace("\",\"value\"", " ")
+      var colon_lat = replace_lat.replace(":", ": ")
+
+
+
+
+if (colon_lat.includes('Latitude')) {
+         
+      var combo = (colon_lat + " " + colon_long)
+      var re_lat = combo.replace("Latitude : ", " ")
+      var re_long = re_lat.replace(" Longitude : ", ",")
+      alert(re_long)
+      window.setTimeout(myFunction, 5000);
+
+      function myFunction() {
+      window.location.assign("https://www.google.com/maps/search/?api=1&query=" + (re_long))
+      }
+
+      
+      
+      
+
+}
+else 
+{
+          alert("Image Contains No Location")
+} 
+
+
+
+
+
+
+
+
+      
+      $("#stdout").html("This website was designed to detect location data.<br>Once location data is found,<br>a google maps link is opened of that location.")
+    }
+    files = $(this).get(0).files;
+    var results = new Array(files.length)
+    _.each(files,function(file,i){
+      var bin = new FileReader();
+      bin.onloadend = function(){
+        var exif = new JpegMeta.JpegFile(this.result, this.file.name);
+        results[i] = {file:file,exif:exif};
+        check();
+      }
+      bin.file = file
+      bin.readAsBinaryString(file);
+    })
+
+
+  })
+  fbtn.click()
+})
+</script>
+
+<style>
+input[type=button] {color: white; font-size: 25px;} 
+
+div#stdout{margin:auto; width:50%;margin-top:25px;color:white;font-size:30px;}
+input#filebtn.button-one{margin-top:25px;margin-left:55px; width: 45%;}
+img{margin-left:80px;}
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700italic);
+
+*{margin: 0px; padding: 0px}
+
+body{
+  background:#2c3e50;
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1, button{
+  color:#fff;
+  text-align: center;
+  padding: 20px;
+}
+
+p{
+  color:#fff;
+  text-align: center;
+  padding-top: 500px;
+  font-size: 10px;
+}
+
+a{
+   text-decoration:none;
+   color:#fff;
+}
+
+a:hover{
+   color:#2ecc71;
+}
+
+.main{
+  width: 100%;
+}
+
+.sub-main{
+  width: 30%;
+  margin:22px;
+  float: left;
+}
+
+.button-one, .button-two, .button-three{
+  text-align: center;
+  cursor: pointer;
+  font-size:24px;
+  margin: 0 0 0 100px;
+}
+
+
+
+/*Button One*/
+.button-one {
+  padding:20px 60px;
+  outline: none;
+  background-color: #27ae60;
+  border: none;
+  border-radius:5px;
+  box-shadow: 0 9px #95a5a6;
+}
+
+.button-one:hover{
+  background-color: #2ecc71;
+}
+
+.button-one:active {
+  background-color: #2ecc71;
+  box-shadow: 0 5px #95a5a6;
+  transform: translateY(4px);
+}
+
+</style>
